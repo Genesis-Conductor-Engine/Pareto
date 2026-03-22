@@ -1,0 +1,15 @@
+# Genesis-Conductor-Engine/Pareto — CODEOWNERS
+# Evaluation order: top-to-bottom, last matching rule wins.
+# Ref: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default: Igor Holt owns everything
+*                               @igor-holt
+
+# Registry — requires PI sign-off on all skill additions
+/registry/                      @igor-holt
+
+# Per-skill ownership (add new skill owners below as contributors join)
+/skills/pareto-audit/           @igor-holt
+
+# Docs
+/docs/                          @igor-holt

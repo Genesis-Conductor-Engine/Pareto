@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "skill": "pareto-audit",
+    "version": "1.0.0",
+    "domain": "startup",
+    "generated": "2026-03-22",
+    "model": "claude-sonnet-4-20250514",
+    "note": "Ground truth example. Input preserved for reproducibility."
+  },
+  "_input": {
+    "domain": "startup",
+    "goal": "Reach $10K MRR within 90 days with a two-person team",
+    "activities": [
+      "Cold email outreach (50/day)",
+      "Building new product features",
+      "Attending networking events",
+      "Writing SEO blog content",
+      "Customer discovery calls",
+      "Investor deck updates",
+      "Twitter/X content posting",
+      "Weekly team standups",
+      "Responding to inbound demo requests",
+      "Competitive analysis research"
+    ],
+    "outputs": "3 paying customers ($450 MRR), 12 demo calls booked last month, 2 blog posts published"
+  },
+  "summary": "Inbound demo conversion and direct customer calls are the entire engine — everything else is noise at this MRR stage.",
+  "vital_20": [
+    {
+      "activity": "Responding to inbound demo requests",
+      "contribution_pct": 45,
+      "insight": "3 customers came from inbound — this is already working. Speed-to-response is the only variable that matters here. Every hour of delay costs conversion."
+    },
+    {
+      "activity": "Customer discovery calls",
+      "contribution_pct": 30,
+      "insight": "Direct voice contact compresses the feedback loop that all other activities approximate. At sub-$1K MRR, founder-led discovery is the highest-ROI motion that exists."
+    },
+    {
+      "activity": "Building new product features",
+      "contribution_pct": 15,
+      "insight": "Only the features surfaced directly from discovery calls qualify as vital. Roadmap items not traceable to a named customer are trivial."
+    }
+  ],
+  "trivial_80": [
+    {
+      "activity": "Cold email outreach (50/day)",
+      "contribution_pct": 3,
+      "prune_reason": "Zero attributed customers at $450 MRR with 3 customers means cold outreach has not closed anything. At 50/day it is consuming the most calendar time for the least validated return. Pause until inbound is saturated."
+    },
+    {
+      "activity": "Attending networking events",
+      "contribution_pct": 1,
+      "prune_reason": "No closed revenue attributed. Networking ROI inverts at early stage — it optimizes for social proof you don't need yet."
+    },
+    {
+      "activity": "Writing SEO blog content",
+      "contribution_pct": 2,
+      "prune_reason": "SEO is a 6-12 month compounding asset. At 90-day $10K MRR target it is structurally misaligned. 2 posts in a month is effort without near-term payoff."
+    },
+    {
+      "activity": "Investor deck updates",
+      "contribution_pct": 0,
+      "prune_reason": "Fundraising narrative is downstream of traction. Deck updates before $10K MRR are premature optimization. Freeze until target is hit."
+    },
+    {
+      "activity": "Twitter/X content posting",
+      "contribution_pct": 1,
+      "prune_reason": "Brand-building channel with sub-3-month feedback loops. No evidence of conversion in current output data."
+    },
+    {
+      "activity": "Competitive analysis research",
+      "contribution_pct": 1,
+      "prune_reason": "Useful quarterly. Running it continuously is anxiety management disguised as strategy."
+    },
+    {
+      "activity": "Weekly team standups",
+      "contribution_pct": 2,
+      "prune_reason": "Async Loom or Slack thread achieves the same coordination at zero synchronous time cost for a two-person team."
+    }
+  ],
+  "unconventional_reframes": [
+    {
+      "conventional_assumption": "More outreach channels = more pipeline coverage",
+      "pareto_reframe": "At 3 customers from inbound with zero from cold outreach, you already have a working acquisition channel. The Pareto move is to double inbound conversion speed, not add cold volume to a channel with no closes."
+    },
+    {
+      "conventional_assumption": "Founders need to build product to grow",
+      "pareto_reframe": "You have 10 activities and 3 customers. None of those customers required new features to close — they closed on existing product. Until discovery calls surface a blocking feature, building is avoidance behavior."
+    },
+    {
+      "conventional_assumption": "Content marketing builds long-term moat",
+      "pareto_reframe": "True — but only after the business model is validated. At sub-$1K MRR, content is future-discounted work. Every blog post hour is an opportunity cost against 10 discovery calls."
+    }
+  ],
+  "action_matrix": [
+    {
+      "rank": 1,
+      "action": "Set inbound demo SLA: respond within 15 minutes during business hours. Build a Zapier/n8n trigger from form submission to calendar booking.",
+      "expected_impact": "high",
+      "effort": "low"
+    },
+    {
+      "rank": 2,
+      "action": "Schedule 3 customer discovery calls per day for the next 30 days. Script is secondary — volume is primary at this stage.",
+      "expected_impact": "high",
+      "effort": "low"
+    },
+    {
+      "rank": 3,
+      "action": "Pause cold email, networking, SEO, and competitive research entirely for 60 days. Redirect those hours to inbound follow-up and discovery.",
+      "expected_impact": "high",
+      "effort": "low"
+    },
+    {
+      "rank": 4,
+      "action": "Replace weekly standup with async Slack thread: 3 bullets — shipped, blocked, next. Reclaim 1hr/week.",
+      "expected_impact": "medium",
+      "effort": "low"
+    },
+    {
+      "rank": 5,
+      "action": "After hitting $3K MRR, re-audit to find the Pareto layer inside discovery calls (which conversation type converts fastest).",
+      "expected_impact": "high",
+      "effort": "medium"
+    }
+  ],
+  "recursive_note": "At $10K MRR, re-run this audit. The trivial 80% will shift — cold outreach and content become viable once inbound is saturated. Pareto layers are stage-dependent."
+}

@@ -1,0 +1,125 @@
+{
+  "_meta": {
+    "skill": "pareto-audit",
+    "version": "1.0.0",
+    "domain": "product",
+    "generated": "2026-03-22",
+    "model": "claude-sonnet-4-20250514",
+    "note": "Ground truth example. Input preserved for reproducibility."
+  },
+  "_input": {
+    "domain": "product",
+    "goal": "Reduce churn from 8% monthly to under 3% within one quarter",
+    "activities": [
+      "Feature roadmap planning",
+      "User interview scheduling and execution",
+      "Stakeholder alignment meetings",
+      "Writing PRDs",
+      "NPS survey analysis",
+      "Analytics dashboard review",
+      "Competitor feature tracking",
+      "Support ticket triage and tagging",
+      "Sprint review presentations",
+      "OKR reporting",
+      "Onboarding flow optimization"
+    ],
+    "outputs": "8% monthly churn, NPS +12, 3 features shipped last quarter, 40% of churned users never completed onboarding"
+  },
+  "summary": "40% of churned users never completed onboarding — this single data point identifies the intervention point. Everything else is downstream noise.",
+  "vital_20": [
+    {
+      "activity": "Onboarding flow optimization",
+      "contribution_pct": 50,
+      "insight": "40% of churn occurs before onboarding completion. This is a product-market fit signal masquerading as a retention problem. Fixing onboarding completion rate addresses the largest single churn cohort directly. This is the only activity with a direct causal path to the 3% target."
+    },
+    {
+      "activity": "Support ticket triage and tagging",
+      "contribution_pct": 20,
+      "insight": "Support tickets from churned users in their first 14 days contain the exact friction map for the onboarding problem. This is the fastest source of qualitative signal that doesn't require scheduling delays. Mining this retroactively takes hours, not weeks."
+    },
+    {
+      "activity": "User interview scheduling and execution",
+      "contribution_pct": 20,
+      "insight": "Specifically: exit interviews with users who churned after incomplete onboarding. General user interviews produce diffuse signal. Segment to the churn cohort and the signal-to-noise ratio inverts."
+    }
+  ],
+  "trivial_80": [
+    {
+      "activity": "Feature roadmap planning",
+      "contribution_pct": 2,
+      "prune_reason": "New features do not reduce churn caused by incomplete onboarding. Adding capability to a product users haven't fully adopted accelerates churn, not retention. Freeze non-critical roadmap work until onboarding completion rate exceeds 80%."
+    },
+    {
+      "activity": "Competitor feature tracking",
+      "contribution_pct": 1,
+      "prune_reason": "Users are churning before experiencing the product, not because of competitor features. Competitive intelligence is irrelevant to the diagnosed problem."
+    },
+    {
+      "activity": "NPS survey analysis",
+      "contribution_pct": 2,
+      "prune_reason": "NPS +12 is a lagging aggregate metric. It masks the onboarding cohort signal. NPS from users who completed onboarding will be materially higher than +12 — which means the survey is averaging a working product against a broken onboarding experience."
+    },
+    {
+      "activity": "OKR reporting",
+      "contribution_pct": 1,
+      "prune_reason": "Reporting overhead on a churn crisis. Automate the dashboard; eliminate the narrative reporting until the metric moves."
+    },
+    {
+      "activity": "Stakeholder alignment meetings",
+      "contribution_pct": 2,
+      "prune_reason": "Alignment meetings are valuable for contested priorities. Reducing churn from 8% to 3% is not a contested priority — it is an existential metric. Compress to a weekly 15-minute async status."
+    },
+    {
+      "activity": "Sprint review presentations",
+      "contribution_pct": 1,
+      "prune_reason": "Ceremony overhead. Replace with async Loom + written summary for the duration of the churn intervention quarter."
+    }
+  ],
+  "unconventional_reframes": [
+    {
+      "conventional_assumption": "Churn reduction requires better features or pricing changes",
+      "pareto_reframe": "40% of churned users never used the product enough to evaluate features or pricing. This is a delivery failure, not a product failure. You cannot fix evaluation-stage churn with product-stage solutions."
+    },
+    {
+      "conventional_assumption": "NPS is a reliable leading indicator of retention",
+      "pareto_reframe": "Your NPS is computed across a mixed cohort — users who completed onboarding (retained, higher NPS) and users who didn't (churned, lower NPS). The aggregate score hides the bimodal distribution. Segmented NPS by onboarding completion status would show two completely different products."
+    },
+    {
+      "conventional_assumption": "PMs should balance retention work with new feature development",
+      "pareto_reframe": "At 8% monthly churn, the product loses its entire user base every 12 months. There is no portfolio to balance. This is a single-constraint problem that requires single-constraint focus until the metric clears 3%."
+    }
+  ],
+  "action_matrix": [
+    {
+      "rank": 1,
+      "action": "Pull all support tickets from users who churned in days 0-14. Tag by friction point. Build a frequency map. This takes 4-8 hours and produces the complete onboarding repair list.",
+      "expected_impact": "high",
+      "effort": "low"
+    },
+    {
+      "rank": 2,
+      "action": "Schedule 10 exit interviews specifically with users who churned before completing onboarding. Ask only: 'What happened when you first tried to use the product?'",
+      "expected_impact": "high",
+      "effort": "low"
+    },
+    {
+      "rank": 3,
+      "action": "Instrument onboarding funnel with step-level drop-off analytics if not already present. Identify the single step with highest abandonment rate. Fix that step only.",
+      "expected_impact": "high",
+      "effort": "medium"
+    },
+    {
+      "rank": 4,
+      "action": "Freeze all new feature PRDs not directly tied to onboarding completion for 60 days.",
+      "expected_impact": "high",
+      "effort": "low"
+    },
+    {
+      "rank": 5,
+      "action": "Replace all recurring stakeholder and sprint review ceremonies with async formats for Q2. Reclaim 6-8hrs/week for direct churn intervention work.",
+      "expected_impact": "medium",
+      "effort": "low"
+    }
+  ],
+  "recursive_note": "Once onboarding completion exceeds 80% and churn drops below 3%, re-audit. The vital 20% will shift to activation depth (which features correlate with 6-month retention). That is the next Pareto layer."
+}

@@ -1,0 +1,120 @@
+{
+  "_meta": {
+    "skill": "pareto-audit",
+    "version": "1.0.0",
+    "domain": "engineering",
+    "generated": "2026-03-22",
+    "model": "claude-sonnet-4-20250514",
+    "note": "Ground truth example. Input preserved for reproducibility."
+  },
+  "_input": {
+    "domain": "engineering",
+    "goal": "Ship 2x features per sprint without increasing headcount",
+    "activities": [
+      "Sprint planning meetings (2hr/week)",
+      "Code review (avg 4hr/week/engineer)",
+      "Writing unit tests",
+      "Incident response and on-call",
+      "Architecture design docs",
+      "Pair programming sessions",
+      "Slack interrupt handling",
+      "Backlog grooming",
+      "CI/CD pipeline maintenance",
+      "1:1s with direct reports",
+      "Technical debt sprints (quarterly)"
+    ],
+    "outputs": "6-week sprint cycle, ~4 features/sprint, p50 incident MTTR 47 min, PR cycle time 3.2 days"
+  },
+  "summary": "3.2-day PR cycle time is the single constraint killing throughput — code review bottleneck compounds into every other metric.",
+  "vital_20": [
+    {
+      "activity": "Code review (avg 4hr/week/engineer)",
+      "contribution_pct": 40,
+      "insight": "PR cycle time of 3.2 days means reviews are batched or deprioritized. This single variable determines feature throughput more than any other. Halving cycle time to 1.5 days would directly double effective sprint capacity without adding headcount."
+    },
+    {
+      "activity": "CI/CD pipeline maintenance",
+      "contribution_pct": 25,
+      "insight": "Pipeline reliability is the hidden multiplier on all other work. Flaky CI creates shadow work (re-runs, manual checks) that inflates real cycle time beyond the measured 3.2 days. A 10% pipeline reliability improvement recovers compounding hours weekly."
+    },
+    {
+      "activity": "Architecture design docs",
+      "contribution_pct": 20,
+      "insight": "Up-front design prevents the rework that derails sprints. One good design doc per large feature eliminates 2-3 late-sprint pivots. This is asymmetric leverage — low time cost, high variance reduction."
+    }
+  ],
+  "trivial_80": [
+    {
+      "activity": "Sprint planning meetings (2hr/week)",
+      "contribution_pct": 3,
+      "prune_reason": "2hr/week synchronous planning for a team that already has CI/CD and a backlog is overhead. 45-minute async-first planning with async pre-reads recovers 75 minutes/week per engineer."
+    },
+    {
+      "activity": "Backlog grooming",
+      "contribution_pct": 2,
+      "prune_reason": "Grooming is valuable only at the feature definition boundary. Running it as a recurring ceremony inflates process overhead. Trigger-based grooming (when backlog drops below N items) replaces the fixed cadence."
+    },
+    {
+      "activity": "Slack interrupt handling",
+      "contribution_pct": 2,
+      "prune_reason": "Unstructured interrupt handling is the highest-cost invisible tax on deep work. Context-switching cost is 23 minutes per interrupt (Gloria Mark, UC Irvine). Batching to 2x/day windows is the single highest-leverage intervention requiring zero tooling changes."
+    },
+    {
+      "activity": "Technical debt sprints (quarterly)",
+      "contribution_pct": 4,
+      "prune_reason": "Quarterly debt sprints are a symptom of not allocating 20% capacity per sprint to debt reduction. The batch model means debt accumulates for 11 weeks before being addressed. Inline allocation eliminates the sprint-scope disruption."
+    },
+    {
+      "activity": "Writing unit tests",
+      "contribution_pct": 4,
+      "prune_reason": "Not prune-worthy in isolation, but if test-writing is blocking PR merges without automated coverage gates, it is a process design problem, not a skill gap. Automate the coverage threshold enforcement; remove manual test sign-off."
+    }
+  ],
+  "unconventional_reframes": [
+    {
+      "conventional_assumption": "More engineers = more features shipped",
+      "pareto_reframe": "At 3.2-day PR cycle time, adding engineers increases review queue depth before it increases output. The constraint is review bandwidth, not raw coding capacity. Fix cycle time first — headcount scales after."
+    },
+    {
+      "conventional_assumption": "Technical debt sprints are responsible engineering practice",
+      "pareto_reframe": "Batch debt sprints optimize for visibility over velocity. They are politically safe (discrete, reportable) but structurally inferior to inline debt budgets. The quarterly sprint is a symptom of insufficient sprint-level autonomy to address debt continuously."
+    },
+    {
+      "conventional_assumption": "Pair programming is a premium activity reserved for hard problems",
+      "pareto_reframe": "Pair programming on complex features eliminates the largest source of late-review surprises. It front-loads the knowledge transfer that code review approximates. For features that would generate >10 review comments, pairing is faster end-to-end."
+    }
+  ],
+  "action_matrix": [
+    {
+      "rank": 1,
+      "action": "Implement PR review SLA: all PRs reviewed within 4 business hours. Assign dedicated review rotation slots (not interrupt-driven). Measure cycle time weekly.",
+      "expected_impact": "high",
+      "effort": "low"
+    },
+    {
+      "rank": 2,
+      "action": "Batch Slack to two designated windows per day (10am, 3pm). Add auto-responder for off-window hours. No tooling purchase required.",
+      "expected_impact": "high",
+      "effort": "low"
+    },
+    {
+      "rank": 3,
+      "action": "Audit CI/CD pipeline for flaky tests. Fix or quarantine the top 3 flaky test suites. Target: 95%+ green-on-first-run rate.",
+      "expected_impact": "high",
+      "effort": "medium"
+    },
+    {
+      "rank": 4,
+      "action": "Replace quarterly debt sprint with 20% per-sprint capacity allocation. No ceremony change required — just a sprint planning norm.",
+      "expected_impact": "medium",
+      "effort": "low"
+    },
+    {
+      "rank": 5,
+      "action": "Reduce sprint planning to 45 minutes with mandatory async pre-read (backlog items annotated before meeting). Eliminate in-meeting estimation from scratch.",
+      "expected_impact": "medium",
+      "effort": "low"
+    }
+  ],
+  "recursive_note": "After PR cycle time drops below 1.5 days, re-audit. The next Pareto layer will likely be inside the architecture doc process — which design doc templates prevent the most rework."
+}
