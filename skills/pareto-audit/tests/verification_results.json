@@ -1,0 +1,30 @@
+{
+  "eval_id": 3,
+  "eval_name": "codebase-module-audit",
+  "run_type": "inline_verification",
+  "delineation_metrics": {
+    "T_total": 888,
+    "T_pre": 0,
+    "T_post": 32,
+    "T_art": 856,
+    "R_art": 0.964,
+    "TTFS": 0,
+    "H": 0,
+    "M": 0
+  },
+  "delineation_grades": {
+    "R_art_pass": true,
+    "H_pass": true,
+    "M_pass": true,
+    "TTFS_pass": true,
+    "overall_pass": true
+  },
+  "assertion_results": [
+    {"name": "quantitative_decomposition", "passed": true},
+    {"name": "engineer_allocation", "passed": true},
+    {"name": "cascade_analysis", "passed": true},
+    {"name": "action_matrix", "passed": true}
+  ],
+  "all_assertions_pass": true,
+  "verdict": "PASS — Skill produces structured Pareto output with geodesic-compliant artifact density"
+}
