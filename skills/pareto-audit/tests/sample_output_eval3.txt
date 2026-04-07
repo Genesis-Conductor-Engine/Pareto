@@ -1,0 +1,79 @@
+## Pareto Audit: Monorepo Stability Sprint
+
+### Input Summary
+Domain: Monorepo module stability. 14 modules, 185 total bugs last quarter. 4 engineers available. Goal: maximize bug reduction per engineer-sprint.
+
+### Pareto Decomposition
+
+| Module | Bugs | Contribution | Cumulative | Tier |
+|---|---|---|---|---|
+| auth | 47 | 25.4% | 25.4% | VITAL_20 |
+| billing | 31 | 16.8% | 42.2% | VITAL_20 |
+| search | 22 | 11.9% | 54.1% | VITAL_20 |
+| notifications | 18 | 9.7% | 63.8% | CONTRIBUTING |
+| permissions | 15 | 8.1% | 71.9% | CONTRIBUTING |
+| reporting | 12 | 6.5% | 78.4% | CONTRIBUTING |
+| email-templates | 9 | 4.9% | 83.2% | TRIVIAL_80 |
+| analytics | 8 | 4.3% | 87.6% | TRIVIAL_80 |
+| onboarding-wizard | 7 | 3.8% | 91.4% | TRIVIAL_80 |
+| user-profiles | 6 | 3.2% | 94.6% | TRIVIAL_80 |
+| feature-flags | 4 | 2.2% | 96.8% | TRIVIAL_80 |
+| recommendations | 3 | 1.6% | 98.4% | TRIVIAL_80 |
+| admin-panel | 2 | 1.1% | 99.5% | TRIVIAL_80 |
+| audit-log | 1 | 0.5% | 100.0% | TRIVIAL_80 |
+
+3 modules (auth, billing, search) = 54.1% of all bugs. Add notifications + permissions + reporting = 79.5%. The vital 20% threshold (3/14 modules = 21%) captures the majority of instability.
+
+### Stress Test Findings
+
+**auth (VITAL_20):** Genuine leverage — auth touches every request path. Not convention-driven; this is the real attack surface.
+
+**billing (VITAL_20):** [CONVENTIONAL]: "Billing is complex, bugs are expected." [PARETO REFRAME]: 31 bugs in billing suggests the payment state machine has structural holes. A focused invariance audit of the state transitions would collapse bug rate faster than incremental patching.
+
+**search (VITAL_20):** [CONVENTIONAL]: "Search bugs are edge cases from weird queries." [PARETO REFRAME]: 22 bugs in search likely trace to 2-3 missing input validation paths. The bug surface is narrower than it appears — most search bugs are variants of the same root cause.
+
+**email-templates (TRIVIAL_80):** 9 bugs, but these are cosmetic/rendering. Done from habit of "fix every reported bug equally." Stopping entirely for one sprint costs nothing user-facing.
+
+### Causal Leverage Map
+
+**auth → permissions cascade:** Auth and permissions share the same session/token layer. 15 permissions bugs likely include 5-8 that are actually auth bugs misclassified by the triage team. Fixing auth's token validation would cascade-fix a subset of permissions bugs without touching the permissions module directly.
+
+**billing → notifications dependency:** Billing state changes trigger notification events. 6-8 of the 18 notification bugs are downstream of billing state machine errors. Fix billing first → notification bug count drops without direct intervention.
+
+**search → analytics feedback loop:** Search query logging feeds analytics. Malformed search queries that cause search bugs also corrupt analytics data. The 8 analytics bugs may partially resolve when search input validation is fixed.
+
+### Ranked Action Matrix
+
+| Priority | Module | Engineers | Sprint Action | Rationale |
+|---|---|---|---|---|
+| 1 | auth | 2 | Token validation overhaul + session layer audit | 25.4% of bugs + cascade into permissions |
+| 2 | billing | 1 | State machine invariance audit (transitions, not patches) | 16.8% + cascade into notifications |
+| 3 | search | 1 | Input validation sweep (3 root patterns) | 11.9% + cascade into analytics |
+| — | notifications | 0 | Wait for billing cascade effect | ~40% of bugs are downstream of billing |
+| — | permissions | 0 | Wait for auth cascade effect | ~50% of bugs are misclassified auth issues |
+| — | all others | 0 | Zero sprint allocation | Combined = 20.5% of bugs, not worth 1 engineer |
+
+### Prune List
+
+| Module | Prune Rationale | Expected Impact of Zero Allocation |
+|---|---|---|
+| email-templates | Cosmetic bugs only. No user-blocking issues. | Zero churn risk |
+| analytics | Partially resolves via search cascade | Reassess post-sprint |
+| onboarding-wizard | 7 bugs in low-traffic path | Defer to next quarter |
+| user-profiles | 6 bugs, stable trend | No escalation risk |
+| feature-flags | 4 bugs in internal tooling | Engineers self-workaround |
+| recommendations | 3 bugs, lowest-traffic module | No revenue impact |
+| admin-panel | 2 bugs, internal only | Zero external exposure |
+| audit-log | 1 bug. Literally one. | Prune without discussion |
+
+### Unconventional Reframes
+
+[CONVENTIONAL]: Distribute engineers proportionally across bug counts → [PARETO REFRAME]: Concentrate all 4 engineers on 3 modules. The cascade effects between auth→permissions and billing→notifications mean fixing 3 modules effectively addresses 5.
+
+[CONVENTIONAL]: Triage every bug independently → [PARETO REFRAME]: 30-40% of bugs across notifications, permissions, and analytics are symptoms of root causes in auth, billing, and search. Bug triage is over-counting the true defect surface by ~35%.
+
+[CONVENTIONAL]: A "stability sprint" means reducing total bug count → [PARETO REFRAME]: The metric that matters is bug severity × user impact, not count. Auth and billing bugs block revenue paths. The 38 bugs in TRIVIAL_80 modules combined have less user impact than auth's 47 alone.
+
+### Next Steps
+
+[RECURSE: Re-apply pareto_audit post-sprint to the remaining bug distribution. After auth/billing/search fixes + cascade effects, the new distribution will reveal the next vital 20% — likely notifications and permissions as standalone targets.]

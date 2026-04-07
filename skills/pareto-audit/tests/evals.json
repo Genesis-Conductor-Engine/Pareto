@@ -1,0 +1,116 @@
+{
+  "skill_name": "pareto-audit",
+  "evals": [
+    {
+      "id": 1,
+      "name": "saas-startup-roadmap",
+      "prompt": "I'm CTO of a 12-person SaaS startup. We're spread across 8 initiatives right now: core product improvements, a new mobile app, API partner integrations, SOC2 compliance, redesigning onboarding, building an analytics dashboard, migrating to k8s, and writing a technical blog. Revenue is $180k MRR but growth has flatlined at 3% month-over-month. Our runway is 14 months. I need to figure out what to cut and what to double down on. Can you do a Pareto audit on our roadmap?",
+      "expected_output": "Pareto decomposition table with 8 activities ranked by contribution to MRR growth. VITAL_20 should identify 2-3 items (likely core product + onboarding or API integrations). TRIVIAL_80 should flag blog, k8s migration, analytics dashboard. Unconventional reframes should challenge at least one 'obvious' priority. Prune list with freed engineering hours estimate.",
+      "assertions": [
+        {
+          "name": "pareto_table_present",
+          "type": "contains",
+          "check": "Activity",
+          "description": "Output contains a Pareto decomposition table"
+        },
+        {
+          "name": "vital_20_tagged",
+          "type": "contains",
+          "check": "VITAL_20",
+          "description": "Activities are tagged with VITAL_20 tier"
+        },
+        {
+          "name": "trivial_80_tagged",
+          "type": "contains",
+          "check": "TRIVIAL_80",
+          "description": "Activities are tagged with TRIVIAL_80 tier"
+        },
+        {
+          "name": "unconventional_reframe",
+          "type": "contains",
+          "check": "REFRAME",
+          "description": "Contains unconventional reframes challenging consensus"
+        },
+        {
+          "name": "prune_list_present",
+          "type": "contains",
+          "check": "Prune",
+          "description": "Contains an explicit prune list"
+        },
+        {
+          "name": "no_preamble",
+          "type": "not_contains",
+          "check": "Great question",
+          "description": "No conversational preamble (geodesic compliance)"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "personal-time-audit",
+      "prompt": "I tracked my time for 2 weeks. Here's where my hours went: meetings (22h/wk), Slack/email (15h/wk), deep coding (8h/wk), code review (6h/wk), 1:1s with reports (4h/wk), interviewing candidates (3h/wk), writing design docs (2h/wk), exercise (1.5h/wk). I'm a senior staff engineer and I feel like I'm not shipping anything meaningful. My promotion packet is due in 6 months. Run a Pareto audit on my time.",
+      "expected_output": "Pareto decomposition showing deep coding + design docs as VITAL_20 despite low current hours. Meetings + Slack/email as TRIVIAL_80 consuming 37h/wk. Joy×value matrix since this is personal domain. Non-linear causal analysis showing that meetings generate Slack threads which generate more meetings (feedback loop). Concrete prune: reduce meetings to <10h, batch Slack to 2 windows/day.",
+      "assertions": [
+        {
+          "name": "joy_value_matrix",
+          "type": "contains",
+          "check": "Joy",
+          "description": "Contains joy×value matrix (personal domain trigger)"
+        },
+        {
+          "name": "hedonistic_mode_active",
+          "type": "contains",
+          "check": "guilt",
+          "description": "Hedonistic mode engages — addresses guilt-driven activity"
+        },
+        {
+          "name": "time_recovery_estimate",
+          "type": "regex",
+          "check": "\\d+\\s*h",
+          "description": "Includes quantified time recovery estimates"
+        },
+        {
+          "name": "feedback_loop_identified",
+          "type": "contains",
+          "check": "loop",
+          "description": "Non-linear mode identifies feedback loops in time use"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "codebase-module-audit",
+      "prompt": "Our monorepo has 14 modules: auth, billing, notifications, admin-panel, search, recommendations, analytics, reporting, user-profiles, permissions, audit-log, feature-flags, email-templates, onboarding-wizard. Bug reports from last quarter: auth (47), billing (31), search (22), recommendations (3), notifications (18), admin-panel (2), analytics (8), reporting (12), user-profiles (6), permissions (15), audit-log (1), feature-flags (4), email-templates (9), onboarding-wizard (7). We have 4 engineers available for a stability sprint. Where should they focus?",
+      "expected_output": "Pareto decomposition using bug counts as output metric. auth + billing + search = 100 bugs (54% of 185 total). Add notifications + permissions = 80%. These 5 modules are VITAL_20. Concrete allocation: 2 engineers on auth, 1 on billing, 1 split search/notifications. Prune: audit-log, admin-panel, recommendations get zero sprint allocation. Non-linear: check if auth bugs cascade into permissions bugs (shared dependency).",
+      "assertions": [
+        {
+          "name": "quantitative_decomposition",
+          "type": "regex",
+          "check": "\\d+%",
+          "description": "Contains percentage-based contribution estimates"
+        },
+        {
+          "name": "engineer_allocation",
+          "type": "contains",
+          "check": "engineer",
+          "description": "Provides concrete engineer allocation recommendation"
+        },
+        {
+          "name": "cascade_analysis",
+          "type": "contains",
+          "check": "cascade",
+          "description": "Non-linear mode identifies potential bug cascades between modules"
+        },
+        {
+          "name": "action_matrix",
+          "type": "contains",
+          "check": "Action Matrix",
+          "description": "Contains ranked action matrix"
+        }
+      ],
+      "files": []
+    }
+  ]
+}
