@@ -1,0 +1,17 @@
+# Pareto — Multi-Objective Optimization
+
+> Multi-objective optimization engine for Genesis Conductor.
+> HAVIS/Pareto architect vertex.
+
+## Features
+- Pareto frontier computation
+- Multi-objective trade-off analysis
+- AI agent decision support
+
+## Genesis Conductor Role
+- Architect vertex for optimization decisions
+- Part of fleet coordination system
+
+## Creator
+Igor Holt — AI Architect
+Genesis Conductor Engine
